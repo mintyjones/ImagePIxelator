@@ -8,13 +8,14 @@ const contextNew = canvasNew.getContext('2d');
 const width = image.width;
 const height = image.height;
 let collectedColsRow = []
+let collectedColsFullImage = []
 
 canvas.width = width;
 canvas.height = height;
 
 
 // measurement in pixels of the element's CSS width, including any borders, padding, and vertical scrollbars (if rendered)
-const SAMPLE_SIZE = sampleArea.offsetWidth;
+const SAMPLE_SIZE = 10;
 console.log("SAMPLE_SIZE: "+SAMPLE_SIZE)
 const SAMPLE_CENTER = SAMPLE_SIZE / 2;
 console.log("SAMPLE_CENTER: "+SAMPLE_CENTER)
@@ -95,38 +96,35 @@ function sampleColor(clientX, clientY) {
   sampleCols.push(R,G,B)
   collectedColsRow.push(sampleCols)
   console.log(collectedColsRow)
-  // colourBox.style.backgroundColor=`rgb(${ R }, ${ G }, ${ B })`
-  // sampleArea.style.left=`${clientX}px`
-  // sampleArea.style.top=`${clientY}px`
+
 }
 
-// function sleep(milliseconds) {
-//   const date = Date.now();
-//   let currentDate = null;
-//   do {
-//     currentDate = Date.now();
-//   } while (currentDate - date < milliseconds);
-// }
 
-// document.onclick = (e) => console.log(e.offsetX, e.offsetY, e.target, e.target.id)
 document.onclick = (e) => console.log(e.clientX, e.clientY, e.target, e.target.id)
-// top left x and y coords passed as arguments
-// sampleColor(MIN_X+40, MIN_Y)
+
 
 function collectColours() {
-  // samples the colours from the first row of the image
-  for (let i = 0; i < width/SAMPLE_SIZE; i++) {
-    sampleColor(MIN_X+(i*SAMPLE_SIZE), MIN_Y)
+  for (let i=0; i < height/SAMPLE_SIZE; i++){
+    for (let j = 0; j < width/SAMPLE_SIZE; j++) {
+      sampleColor(MIN_X+(j*SAMPLE_SIZE), MIN_Y+(i*SAMPLE_SIZE))
+    }
+    collectedColsFullImage.push(collectedColsRow)
+    collectedColsRow = []
   }
+  // samples the colours from the first row of the image
+  
 }
 
 function placeColours(colArray) {
+  // for each row in the array
   for(let i=0;i<colArray.length;i++) {
-    contextNew.fillStyle = `rgb(${colArray[i][0]},${colArray[i][1]},${colArray[i][2]})`
-    contextNew.fillRect(i*40, 0, 40, 40)
-    console.log(`rgb(${colArray[i][0]},${colArray[i][1]},${colArray[i][2]})`)
+    for(let j=0;j<colArray[i].length;j++) {
+      contextNew.fillStyle = `rgb(${colArray[i][j][0]},${colArray[i][j][1]},${colArray[i][j][2]})`
+      contextNew.fillRect(j*SAMPLE_SIZE, i*SAMPLE_SIZE, SAMPLE_SIZE, SAMPLE_SIZE)
+    }
   }
 }
 
 collectColours()
-placeColours(collectedColsRow)
+// console.log(collectedColsFullImage)
+placeColours(collectedColsFullImage)

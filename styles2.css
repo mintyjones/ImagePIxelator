@@ -26,6 +26,7 @@ body {
   height: 40px;
   background: magenta;
   mix-blend-mode: exclusion;
+  display: none;
 }
 
 #colourBox {
@@ -42,5 +43,5 @@ body {
 #canvasNew {
   display: block;
   position: absolute;
-  top: 160px;
+  top: 800px;
 }
