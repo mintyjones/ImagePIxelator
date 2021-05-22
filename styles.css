@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: crosshair;
+  font-family: monospace;
+}
+
+#image {
+  border: 10px solid white;
+  border-radius: 2px;
+  box-shadow: 0 0 32px 0 rgba(0, 0, 0, .25);
+  width: 870px;
+  box-sizing: border-box;
+}
+
+#brush {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 40px;
+  height: 40px;
+  background: magenta;
+  mix-blend-mode: exclusion;
+}
+
+#samples {
+  position: relative;
+  list-style: none;
+  padding: 0;
+  width: 250px;
+}
+
+#samples::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 27px;
+  width: 2px;
+  height: 100%;
+  background: black;
+  border-radius: 1px;
+}
+
+#samples > li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 56px;
+}
+
+#samples > li + li {
+  margin-top: 8px;
+}
+
+.sample {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translate(0, -50%);
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  box-shadow: 0 0 16px 4px rgba(0, 0, 0, .25);  
+  margin-right: 8px;
+}
+
+.sampleLabel {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.sampleCode {
+  
+}
